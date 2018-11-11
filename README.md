@@ -15,6 +15,7 @@
   # {email} is your email, {dns} is your server`s dns
   ./genconf.sh -m {email} -d {dns}
   # After running genconf.sh, you will get the client conf info
+  # Need to release port 80 for acme certificate issuance
   docker-compose up -d
   ```
 

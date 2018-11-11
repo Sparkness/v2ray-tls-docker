@@ -11,7 +11,7 @@ FROM alpine:latest
 LABEL maintainer "Sparkness"
 
 COPY --from=builder /go/bin/caddy /usr/bin/caddy
-COPY Caddyfile /etc/Caddyfile
+
 RUN apk add --no-cache openssh-client ca-certificates
 
 CMD ["/usr/bin/caddy", "-conf=/etc/Caddyfile", "--log", "stdout", "--agree=true"]
