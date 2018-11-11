@@ -2,7 +2,7 @@ version: '3'
 
 services:
   v2ray-tls:
-    image: spartans1179/v2ray-tls:latest
+    image: spartans1179/v2ray-tls-docker:latest
     restart: always
     volumes:
       - ./config/config.json:/etc/v2ray/config.json
