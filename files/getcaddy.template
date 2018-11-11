@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/curl -fsSl https://caddyserver.com/download/linux/amd64?{PLUGINS}&license=personal&telemetry=off | tar zxf -

@@ -4,18 +4,19 @@ GREEN="32m"
 YELLOW="33m"
 BLUE="36m"
 
-usage="$(basename "$0") [-h] [-m -d]\n\n
+usage="$(basename "$0") [-h] [-m -d -p]\n\n
       Please use the following options:\n\n
       -h help\n\n
       -m your email address eg: user@admin.com\n\n
-      -d your dns eg: www.example.com\n"
+      -d your dns eg: www.example.com\n\n
+      -p (optional) caddy plugins eg: http-cache,tls.dns.cloudflare\n"
 
 colorEcho(){
   COLOR=$1
   echo -e "\033[${COLOR}${@:2}\033[0m"
 }
 
-while getopts ":h:m:d:" opt; do
+while getopts ":h:m:d:p:" opt; do
   case $opt in
     h)
       echo -e $usage
@@ -26,6 +27,9 @@ while getopts ":h:m:d:" opt; do
       ;;
     d)
       V2RAY_DOMAIN=$OPTARG
+      ;;
+    p)
+      PLUGINS=$OPTARG
       ;;
     \?)
       colorEcho ${RED}"Invalid option: -$opt"
@@ -60,4 +64,11 @@ fi
 /bin/sed "s/{URI}/$V2RAY_DOMAIN/; s/{EMAIL}/$EMAIL/; s/{PATH}/$PATH/; s/{PORT}/$PORT/" files/caddyfile.template > config/Caddyfile
 /bin/cp config/config.json build/v2ray-tls/
 /bin/cp config/Caddyfile build/web-server/
+
+if [[ -z $PLUGINS ]]; then
+  /bin/sed "s/{PLUGINS}//" files/getcaddy.template > build/web-server/getcaddy.sh
+else
+  /bin/sed "s/{PLUGINS}/plugins=$PLUGINS/" files/getcaddy.template > build/web-server/getcaddy.sh
+fi
+
 colorEcho ${GREEN} "Please use $(pwd)/config/client.json to configure your client."

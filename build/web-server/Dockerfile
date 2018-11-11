@@ -1,11 +1,8 @@
 FROM golang:1.11.2-alpine as builder
 
-RUN apk add --no-cache git
-RUN go get -u github.com/mholt/caddy \
-  && go get -u github.com/caddyserver/builds
-RUN cd src/github.com/mholt/caddy/caddy \
-  && sed -i 's/EnableTelemetry\ =\ true/EnableTelemetry\ =\ false/' caddymain/run.go \
-  && go run build.go -goos=linux -goarch=amd64 \
+ADD getcaddy.sh /go/getcaddy.sh
+RUN apk add --no-cache curl
+RUN getcaddy.sh \
   && mv caddy /go/bin/
 
 FROM alpine:latest
