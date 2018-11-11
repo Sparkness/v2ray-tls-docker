@@ -4,11 +4,21 @@ services:
   v2ray-tls:
     build: ./build/v2ray-tls
     image: v2ray-tls:latest
+    restart: always
+    volumes:
+      - ./config/config.json:/etc/v2ray/config.json
 
   web-server:
     build: ./build/web-server
     image: web-server:latest
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    restart: always
     volumes:
+      - ./config/Caddyfile:/etc/Caddyfile
       - ./files/web-server:/root/.caddy
     depends_on:
       - v2ray-tls
