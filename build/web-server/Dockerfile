@@ -1,8 +1,8 @@
-FROM golang:1.11.2-alpine as builder
+FROM alpine:latest as builder
 
 ADD getcaddy.sh /go/getcaddy.sh
 RUN apk add --no-cache curl
-RUN getcaddy.sh \
+RUN /bin/sh getcaddy.sh \
   && mv caddy /go/bin/
 
 FROM alpine:latest
