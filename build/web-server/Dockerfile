@@ -15,6 +15,3 @@ COPY --from=builder /go/bin/caddy /usr/bin/caddy
 RUN apk add --no-cache openssh-client ca-certificates
 
 CMD ["/usr/bin/caddy", "-conf=/etc/Caddyfile", "--log", "stdout", "--agree=true"]
-
-
-https://caddyserver.com/download/linux/amd64?plugins={plugins}}&license=personal&telemetry=off
