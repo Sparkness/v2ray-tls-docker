@@ -8,7 +8,7 @@ usage="$(basename "$0") [-h] [-m -d]\n\n
       Please use the following options:\n\n
       -h help\n\n
       -m your email address eg: user@admin.com\n\n
-      -d your domain eg: www.example.com\n"
+      -d your dns eg: www.example.com\n"
 
 colorEcho(){
   COLOR=$1
