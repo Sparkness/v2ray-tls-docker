@@ -12,12 +12,3 @@ jobs:
       script: echo "v2ray=$CUR_VERSION" > ./version
 after_success:
   - ./.push.sh
-branches:
-    only:
-        - master
-notifications:
-    recipients:
-        - kenhaoblade@outlook.com
-    email:
-        on_success: always
-        on_failure: always
