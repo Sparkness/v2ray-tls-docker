@@ -1,0 +1,23 @@
+sudo: true
+dist: trusty
+
+before_script:
+  - export CUR_VERSION=$(curl -fsSL https://api.github.com/repos/v2ray/v2ray-core/releases/latest --connect-timeout 10| grep 'tag_name' | cut -d\" -f4)
+  - export VERSION=$(grep 'v2ray' ./.version | cut -d\= -f3)
+jobs:
+  include:
+    - stage: check version
+      if: CUR_VERSION != VERSION
+      script: curl -H "Content-Type: application/json" --data '{"docker_tag": "latest"}' -X POST https://registry.hub.docker.com/u/spartans1179/v2ray-tls-docker/trigger/$DOCKER_TRIGGER_KEY/
+      script: echo "v2ray=$CUR_VERSION" > ./version
+after_success:
+  - ./.push.sh
+branches:
+    only:
+        - master
+notifications:
+    recipients:
+        - kenhaoblade@outlook.com
+    email:
+        on_success: always
+        on_failure: always
