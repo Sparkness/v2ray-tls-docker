@@ -11,7 +11,7 @@ commit_version() {
 }
 
 upload_files() {
-  git remote add origin-pages https://${GH_TOKEN}@github.com/Sparkness/v2ray-tls-docker.git > /dev/null 2>&1
+  git remote add origin-pages https://${GITHUB_TOKEN}@github.com/Sparkness/v2ray-tls-docker.git > /dev/null 2>&1
   git push --quiet
 }
 

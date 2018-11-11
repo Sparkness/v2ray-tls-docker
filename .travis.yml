@@ -8,7 +8,7 @@ jobs:
   include:
     - stage: check version
       if: CUR_VERSION != VERSION
-      script: curl -H "Content-Type: application/json" --data '{"docker_tag": "latest"}' -X POST https://registry.hub.docker.com/u/spartans1179/v2ray-tls-docker/trigger/$DOCKER_TRIGGER_KEY/
+      script: curl -H "Content-Type: application/json" --data '{"docker_tag": "latest"}' -X POST https://registry.hub.docker.com/u/spartans1179/v2ray-tls-docker/trigger/${DOCKER_TRIGGER_KEY}/
       script: echo "v2ray=$CUR_VERSION" > ./version
 after_success:
   - ./.push.sh
