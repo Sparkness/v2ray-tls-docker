@@ -2,15 +2,13 @@ version: '3'
 
 services:
   v2ray-tls:
-    build: ./build/v2ray-tls
-    image: v2ray-tls:latest
+    image: spartans1179/v2ray-tls:latest
     restart: always
     volumes:
       - ./config/config.json:/etc/v2ray/config.json
 
   web-server:
-    build: ./build/web-server
-    image: web-server:latest
+    image: spartans1179/web-server:latest
     ulimits:
       nproc: 65535
       nofile:
