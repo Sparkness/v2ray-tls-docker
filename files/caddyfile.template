@@ -1,0 +1,13 @@
+https://{URI} {
+  log /proc/self/fd/1
+  errors /proc/self/fd/2
+  tls {EMAIL}
+  timeouts {
+    read  60s
+    write 30s
+  }
+  proxy /{PATH} v2ray-tls:{PORT} {
+    websocket
+    header_upstream -Origin
+  }
+}

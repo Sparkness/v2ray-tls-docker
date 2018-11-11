@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  v2ray-tls:
+    build: ./build/v2ray-tls
+    image: v2ray-tls:latest
+
+  web-server:
+    build: ./build/web-server
+    image: web-server:latest
+    volumes:
+      - ./files/web-server:/root/.caddy
+    depends_on:
+      - v2ray-tls
+    ports:
+      - 443:443
+      - 80:80
