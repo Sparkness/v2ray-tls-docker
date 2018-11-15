@@ -27,4 +27,10 @@
 
 ## Customzation
 
-  To do
+  you can run genconf with -p option to enable caddy plugin, eg:
+
+  ```bash
+  ./genconf.sh -m example@a.com -d example.com -p http.cache,tls.dns.cloudflare
+  ```
+
+  Use a comma to separate the plugin name.
