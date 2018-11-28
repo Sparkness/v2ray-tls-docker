@@ -1,47 +1,61 @@
 {
-  "log" : {
+  "log": {
     "access": "/var/log/v2ray/access.log",
     "error": "/var/log/v2ray/error.log",
     "loglevel": "warning"
   },
-  "inbound" : {
-    "listen" : "0.0.0.0",
-    "port" : 8001,
-    "protocol" : "http",
-    "settings" : {
-        "timeout" : 0
-    }
-  },
-  "outbound" : {
-    "sendThrough" : "0.0.0.0",
-    "mux" : {
-      "enabled" : false,
-      "concurrency" : 8
-    },
-    "protocol" : "vmess",
-    "settings" : {
-      "vnext" : [
-        {
-          "address" : "{URI}",
-          "port" : 443,
-          "users" : [
-            {
-              "id" : "{UUID}",
-              "alterId" : 32,
-              "security" : "aes-128-gcm",
-              "level" : 0
-            }
-          ]
-        }
-      ]
-    },
-    "streamSettings" : {
-      "network" : "ws",
-      "wsSettings" : {
-        "path" : "/{PATH}"
+  "inbounds": [
+    {
+      "port": 8001,
+      "listen": "0.0.0.0",
+      "protocol": "http",
+      "settings": {
+        "timeout": 300,
+        "accounts": []
       },
-      "security" : "tls"
+      "tag": "http_main",
+      "sniffing": {
+        "enabled": false,
+        "destOverride": ["http", "tls"]
+      }
     }
-  }
+  ],
+  "outbounds": [
+    {
+      "sendThrough": "0.0.0.0",
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "{URI}",
+            "port": 443,
+            "users": [
+              {
+                "alterId": 32,
+                "security": "aes-128-gcm",
+                "id": "{UUID}"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "vmess_main",
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/{PATH}"
+        },
+        "sockopt": {
+          "mark": 0,
+          "tcpFastOpen": true,
+          "tproxy": "off"
+        }
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": 8
+      }
+    }
+  ]
 }
-
